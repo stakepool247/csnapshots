@@ -6,6 +6,58 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+
+# Check if lz4, curl, and jq are installed and install them if necessary
+echo -e "${YELLOW}Checking for required tools...${NC}"
+if ! command -v lz4 >/dev/null; then
+    echo -e "${YELLOW}lz4 not found. Installing...${NC}"
+    if command -v apt-get >/dev/null; then
+        sudo apt-get update
+        sudo apt-get install -y lz4
+    elif command -v yum >/dev/null; then
+        sudo yum update
+        sudo yum install -y lz4
+    elif command -v zypper >/dev/null; then
+        sudo zypper refresh
+        sudo zypper install -y lz4
+    else
+        echo -e "${RED}Could not find a compatible package manager. Please install lz4 manually.${NC}"
+        exit 1
+    fi
+fi
+if ! command -v curl >/dev/null; then
+    echo -e "${YELLOW}curl not found. Installing...${NC}"
+    if command -v apt-get >/dev/null; then
+        sudo apt-get update
+        sudo apt-get install -y curl
+    elif command -v yum >/dev/null; then
+        sudo yum update
+        sudo yum install -y curl
+    elif command -v zypper >/dev/null; then
+        sudo zypper refresh
+        sudo zypper install -y curl
+    else
+        echo -e "${RED}Could not find a compatible package manager. Please install curl manually.${NC}"
+        exit 1
+    fi
+fi
+if ! command -v jq >/dev/null; then
+    echo -e "${YELLOW}jq not found. Installing...${NC}"
+    if command -v apt-get >/dev/null; then
+        sudo apt-get update
+        sudo apt-get install -y jq
+    elif command -v yum >/dev/null; then
+        sudo yum update
+        sudo yum install -y jq
+    elif command -v zypper >/dev/null; then
+        sudo zypper refresh
+        sudo zypper install -y jq
+    else
+        echo -e "${RED}Could not find a compatible package manager. Please install jq manually.${NC}"
+        exit 1
+    fi
+fi
+
 # Prompt the user to choose a database
 echo -e "${YELLOW}Choose a database:${NC}"
 echo -e "1) ${GREEN}Mainnet${NC}"
